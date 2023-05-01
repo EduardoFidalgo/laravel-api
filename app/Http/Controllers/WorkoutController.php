@@ -74,7 +74,7 @@ class WorkoutController extends Controller
                 ->where('deleted_at', null)
                 ->firstOrFail();
 
-            $categoryTitle = Category::where('id', $workout->category)
+            $categoryTitle = Category::where('category', $workout->category)
                 ->where('deleted_at', null)
                 ->get();
             $workout['category_data'] = $categoryTitle;
