@@ -33,12 +33,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete("/users/{id}", [UserController::class, 'destroy']);
 
     Route::get("/workouts", [WorkoutController::class, 'index']);
-    Route::get("/workouts/category/{category}", [WorkoutController::class, 'workoutsByCategories']);
-    Route::get("/workouts/{id}", [WorkoutController::class, 'show']);
-    Route::get("/workouts/{id}/exercises", [WorkoutController::class, 'allExercisesByWorkoutId']);
     Route::post("/workouts", [WorkoutController::class, 'store']);
+    Route::get("/workouts/{id}", [WorkoutController::class, 'show']);
     Route::put("/workouts/{id}", [WorkoutController::class, 'update']);
     Route::delete("/workouts/{id}", [WorkoutController::class, 'destroy']);
+
+    Route::get("/workouts/category/{category}", [WorkoutController::class, 'workoutsByCategories']);
+    Route::get("/workouts/{id}/exercises", [WorkoutController::class, 'allExercisesByWorkoutId']);
     Route::put("/workouts/category/{id}", [WorkoutController::class, 'changeCategory']);
     Route::put("/workouts/done/{id}", [WorkoutController::class, 'done']);
 
