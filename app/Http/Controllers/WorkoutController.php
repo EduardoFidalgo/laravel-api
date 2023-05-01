@@ -14,17 +14,38 @@ class WorkoutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($category_id)
+    public function index()
     {
         try {
-            if (!is_null($category_id) && !empty($category_id)) {
-                $workouts = Workout::where('type', $category_id)
+            $workouts = Workout::whereNull('deleted_at')
+                ->get();
+
+            foreach ($workouts as $wo) {
+                $categoryTitle = Category::where('id', $wo->category)
                     ->where('deleted_at', null)
                     ->get();
-            } else {
-                $workouts = Workout::whereNull('deleted_at')
-                    ->get();
+                $wo['category_data'] = $categoryTitle;
             }
+
+            if ($workouts->isEmpty()) {
+                return response()->json(['error' => 'No workouts found'], 404);
+            }
+
+            return response()->json(['data' => $workouts], 201);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th], 500);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function workoutsByCategories($category_id)
+    {
+        try {
+            $workouts = Workout::where('category', $category_id)
+                ->where('deleted_at', null)
+                ->firstOrFail();
 
             foreach ($workouts as $wo) {
                 $categoryTitle = Category::where('id', $wo->category)
