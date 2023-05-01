@@ -97,7 +97,7 @@ class WorkoutController extends Controller
                     ->where('id', $exercise->type)
                     ->where('deleted_at', null)
                     ->get();
-                $exercise['category_data'] = $typeData;
+                $exercise['typeData'] = $typeData;
             }
 
             return response()->json(['data' => $exercises], 200);
