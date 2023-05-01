@@ -14,11 +14,17 @@ class WorkoutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($category_id)
     {
         try {
-            $workouts = Workout::whereNull('deleted_at')
-                ->get();
+            if (!is_null($category_id) && !empty($category_id)) {
+                $workouts = Workout::where('type', $category_id)
+                    ->where('deleted_at', null)
+                    ->get();
+            } else {
+                $workouts = Workout::whereNull('deleted_at')
+                    ->get();
+            }
 
             foreach ($workouts as $wo) {
                 $categoryTitle = Category::where('id', $wo->category)

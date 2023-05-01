@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/users", [UserController::class, 'store']);
     Route::delete("/users/{id}", [UserController::class, 'destroy']);
 
-    Route::get("/workouts", [WorkoutController::class, 'index']);
+    Route::get("/workouts/{id}", [WorkoutController::class, 'index']);
     Route::get("/workouts/{id}", [WorkoutController::class, 'show']);
     Route::get("/workouts/{id}/exercises", [WorkoutController::class, 'allExercisesByWorkoutId']);
     Route::post("/workouts", [WorkoutController::class, 'store']);
