@@ -45,7 +45,7 @@ class WorkoutController extends Controller
         try {
             $workouts = Workout::where('category', $category_id)
                 ->where('deleted_at', null)
-                ->firstOrFail();
+                ->get();
 
             foreach ($workouts as $wo) {
                 $categoryTitle = Category::where('id', $wo->category)
@@ -74,7 +74,7 @@ class WorkoutController extends Controller
                 ->where('deleted_at', null)
                 ->firstOrFail();
 
-            $categoryTitle = Category::where('category', $workout->category)
+            $categoryTitle = Category::where('id', $workout->category)
                 ->where('deleted_at', null)
                 ->get();
             $workout['category_data'] = $categoryTitle;
